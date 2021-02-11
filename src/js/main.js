@@ -72,7 +72,6 @@ window.onload=function(){
 			return false
 		}
 		function get_p(x,y,x2,y2,b,c){
-
 			if ((((x2!=x&&Math.abs(x2-x)==1&&board[y2-1][x2-1].c=={"black":"white","white":"black"}[c])||(x2==x&&board[y2-1][x2-1].c==null))&&y2+(c=="white"?1:-1)==y)||(x==x2&&((c=="white"&&y==7&&((y2==6&&b[5][x-1].c==null)||(y2==5&&b[5][x-1].c==null&&b[4][x-1].c==null)))||(c=="black"&&y==2&&((y2==3&&b[2][x-1].c==null)||(y2==4&&b[2][x-1].c==null&&b[3][x-1].c==null)))))){return true}
 			return false
 		}
@@ -107,9 +106,8 @@ window.onload=function(){
 		var c=board[y][x].c,c2=board[y2][x2].c
 		var p=board[y][x].p
 		x++;y++;x2++;y2++
-		var args=[x,y,x2,y2,board,c,pn,asc]
 		if (c==null){return -1}
-		if ((c==c2)||(p=="queen"&&!get_d(...args)&&!get_h(...args))||(p=="bishop"&&!get_d(...args))||(p=="rook"&&!get_h(...args))||(p=="king"&&!get_k(...args))||(p=="pawn"&&!get_p(...args))||(p=="knight"&&!get_kn(...args))||(asc<100&&e_king(...args))){return 0}
+		if ((c==c2)||(p=="queen"&&!get_d(x,y,x2,y2,board,c,pn,asc)&&!get_h(x,y,x2,y2,board,c,pn,asc))||(p=="bishop"&&!get_d(x,y,x2,y2,board,c,pn,asc))||(p=="rook"&&!get_h(x,y,x2,y2,board,c,pn,asc))||(p=="king"&&!get_k(x,y,x2,y2,board,c,pn,asc))||(p=="pawn"&&!get_p(x,y,x2,y2,board,c,pn,asc))||(p=="knight"&&!get_kn(x,y,x2,y2,board,c,pn,asc))||(asc<100&&e_king(x,y,x2,y2,board,c,pn,asc))){return 0}
 		return board[y2-1][x2-1].c=={"black":"white","white":"black"}[c]?2:1
 	}
 	function calc_move(C){
@@ -170,7 +168,6 @@ window.onload=function(){
 			if (dp==0){
 				return -evalB()
 			}
-			var mvs=all_moves(C)
 			if (st){
 				var bc=copy(board,"b"),kg=copy(KINGS,"k"),best=-9999
 				for (var mv of all_moves(C)){
